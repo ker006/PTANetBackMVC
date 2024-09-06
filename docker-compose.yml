@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+  webapi:
+    image: ${DOCKER_REGISTRY-}webapi
+    build:
+      context: .
+      dockerfile: WebAPI/Dockerfile
+    ports:
+          - "8080:80"
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ConnectionStrings__DbConnection=Server=db;Database=MyAppDb;User Id=/run/secrets/db_user;Password=/run/secrets/db_password;
+    secrets:
+          - db_password
+          - db_user
+    depends_on:
+        - db
+ # Servicio para SQL Server
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=/run/secrets/db_password
+      - MSSQL_PID=Express
+    secrets:
+          - db_password
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+
+volumes:
+  sql_data:
+  
+secrets:
+  db_password:
+    external: true
+  db_user:
+    external: true
