@@ -18,13 +18,13 @@ namespace Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HourlyImbalanceFee = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    ImbalanceFee = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    PeakLoadFee = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    HourlyImbalanceFee = table.Column<decimal>(type: "decimal(10,4)", nullable: true),
+                    ImbalanceFee = table.Column<decimal>(type: "decimal(10,4)", nullable: true),
+                    PeakLoadFee = table.Column<decimal>(type: "decimal(10,4)", nullable: true),
                     Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TimestampUTC = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    VolumeFee = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    WeeklyFee = table.Column<int>(type: "int", nullable: false)
+                    VolumeFee = table.Column<decimal>(type: "decimal(10,4)", nullable: true),
+                    WeeklyFee = table.Column<int>(type: "decimal(10,4)", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -32,11 +32,14 @@ namespace Infrastructure.Persistence
                 entity.Property(e => e.Country)
                     .IsRequired();
 
-                entity.Property(e => e.HourlyImbalanceFee);
+                entity.Property(e => e.HourlyImbalanceFee)
+                    .HasColumnType("decimal(10,4)");
 
-                entity.Property(e => e.ImbalanceFee);
+                entity.Property(e => e.ImbalanceFee)
+                    .HasColumnType("decimal(10,4)");
 
-                entity.Property(e => e.PeakLoadFee);
+                entity.Property(e => e.PeakLoadFee)
+                    .HasColumnType("decimal(10,4)"); ;
 
                 entity.Property(e => e.Timestamp)
                     .IsRequired();
@@ -44,8 +47,11 @@ namespace Infrastructure.Persistence
                 entity.Property(e => e.TimestampUTC)
                     .IsRequired();
 
-                entity.Property(e => e.VolumeFee);
-                entity.Property(e => e.WeeklyFee);
+                entity.Property(e => e.VolumeFee)
+                    .HasColumnType("decimal(10,4)");
+
+                entity.Property(e => e.WeeklyFee)
+                    .HasColumnType("decimal(10,4)");
 
             });
 

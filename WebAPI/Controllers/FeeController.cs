@@ -15,25 +15,22 @@ namespace WebAPI.Controllers
     {
         private readonly FeeService _service;
         private readonly ILogger<FeeController> _logger;
+        public FeeController(FeeService service)
+        {
+            _service = service;
+        }
 
         [HttpPost]
         [Route("[action]")]
         public async Task<IActionResult> InsertFeeDataAsync()
         {
-            _logger.LogInformation("Start population");
-            BaseResponse<Fee> resp = await _service.PopulateFeeDb();
+            BaseResponse<Fee> resp = await _service.PopulateFeeDbAsync();
 
-            if (resp == null) {
-                resp = new BaseResponse<Fee>
-                {
-                    Errors = new List<string> { "Error - ActionsHistoricRequest object is null." },
-                    Total = 0
-                };
-
-                return StatusCode(500, string.Join(Environment.NewLine, resp.Errors));
+            if (resp.Errors.Count > 0) {
+                return StatusCode(500, resp);
             }
 
-            return Ok("Populated " + resp.Total + " Fees");
+            return Ok(resp);
         }
     }
 }

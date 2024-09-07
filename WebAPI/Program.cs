@@ -11,12 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-//Services
-builder.Services.AddScoped<FeeService>();
-
-//UseCases
-builder.Services.AddScoped<FeeUseCases>();
+builder.Services.AddCors();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -26,6 +21,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     });
 });
 
+//Services
+builder.Services.AddScoped<FeeService>();
+builder.Services.AddScoped<FeeUseCases>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -33,6 +32,14 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     dbContext.Database.Migrate();
 }
+
+app.UseCors(builder =>{    
+    builder
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true)
+    .AllowCredentials();
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
