@@ -2,16 +2,10 @@
 using Domain.Entities;
 using Infrastructure.DTOs.Common;
 using Infrastructure.Persistence;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Net.Http;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System.Data.Entity;
+using System.Net;
 
 namespace Infrastructure.Services
 {
@@ -30,7 +24,8 @@ namespace Infrastructure.Services
 
         public async Task<BaseResponse<Fee>> PopulateFeeDbAsync()
         {
-            BaseResponse<Fee> resp = new BaseResponse<Fee> {
+            BaseResponse<Fee> resp = new BaseResponse<Fee>
+            {
                 Total = 0
             };
 
@@ -49,6 +44,8 @@ namespace Infrastructure.Services
 
                     resp.Results = fees;
                     resp.Total = fees.Count;
+                    resp.Page = 1;
+                    resp.PageSize = fees.Count;
                 }
             }
             catch (Exception ex)
@@ -58,5 +55,41 @@ namespace Infrastructure.Services
 
             return resp;
         }
+        public async Task<BaseResponse<Fee>> GetAsync(int? id, int? page, int? pageSize)
+        {
+            BaseResponse<Fee> resp = new BaseResponse<Fee>
+            {
+                Total = 0
+            };
+
+            try
+            {
+                resp.Total = _context.Fees.Count();
+
+                IQueryable<Fee> fees = _context.Fees.Where(
+                    x => ((null == id || id == 0) || x.Id == id)
+                );
+
+                pageSize = null == pageSize || pageSize <= 0 ? 50 : (int)pageSize;
+                page = null == page || page <= 0 || pageSize * page > fees.Count() ? 0 : (int)page - 1;
+
+                resp.Results = fees
+                                .OrderByDescending(x => x.Id)
+                                .Skip((int)pageSize * (int)page)
+                                .Take((int)pageSize)
+                                .ToList();
+
+                resp.Page = (int)page + 1;
+                resp.PageSize = resp.Results.Count;
+
+            }
+            catch (Exception ex)
+            {
+                resp.Errors.Add(ex.Message);
+            }
+            return resp;
+        }
+
+
     }
 }

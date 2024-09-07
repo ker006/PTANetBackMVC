@@ -1,11 +1,7 @@
 ﻿using Domain.Entities;
 using Infrastructure.DTOs.Common;
-using Infrastructure.DTOs.Fee;
 using Infrastructure.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
-using System.Diagnostics.Contracts;
 
 namespace WebAPI.Controllers
 {
@@ -26,7 +22,22 @@ namespace WebAPI.Controllers
         {
             BaseResponse<Fee> resp = await _service.PopulateFeeDbAsync();
 
-            if (resp.Errors.Count > 0) {
+            if (resp.Errors.Count > 0)
+            {
+                return StatusCode(500, resp);
+            }
+
+            return Ok(resp);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> GetAsync([FromQuery] int? id, [FromQuery] int? page, [FromQuery] int? pageSize)
+        {
+            BaseResponse<Fee> resp = await _service.GetAsync(id, page, pageSize);
+
+            if (resp.Errors.Count > 0)
+            {
                 return StatusCode(500, resp);
             }
 
