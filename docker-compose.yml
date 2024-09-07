@@ -21,7 +21,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=/run/secrets/db_password
+      - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_password
       - MSSQL_PID=Express
     secrets:
           - db_password
@@ -35,6 +35,6 @@ volumes:
   
 secrets:
   db_password:
-    external: true
-  db_user:
-    external: true
+    file: ./secrets/db_password.txt
+  db_user:    
+    file: ./secrets/db_user.txt
