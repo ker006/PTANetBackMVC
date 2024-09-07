@@ -366,4 +366,4 @@ FodyWeavers.xsd
 
 **/obj/*
 **/bin/*
-/secrets/db_password.txt
+/.env

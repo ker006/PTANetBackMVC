@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Fee
+    public partial class Fee
     {
-        string Country;
-        decimal? HourlyImbalanceFee;
-        decimal? ImbalanceFee;
-        decimal? PeakLoadFee;
-        DateTime Timestamp;
-        DateTimeOffset TimestampUTC;
-        decimal? VolumeFee;
-        int WeeklyFee;
+        public int Id { get; set; }
+        public string Country { get; set; }
+        public decimal? HourlyImbalanceFee { get; set; }
+        public decimal? ImbalanceFee { get; set; }
+        public decimal? PeakLoadFee { get; set; }
+        public DateTime Timestamp { get; set; }
+        public DateTimeOffset TimestampUTC { get; set; }
+        public decimal? VolumeFee { get; set; }
+        public int WeeklyFee { get; set; }
     }
 }

@@ -20,7 +20,12 @@ The main goal of using responsibility segregation (read/write) is to separate da
 In this case, since only one database is being used and it's being mounted via containers on the same server as the API, I believe it's more optimal to use a simple CRUD.
 
 ## Build Instructions
-Install Docker on the target machine and run the following command:
+1. Clone this repository
+
+2. Add .env file in root with this values:
+	SA_PASSWORD=[any password from 8 caracters containing uppercase letters, lower letters, numbers, symbols]
+
+3. Install Docker on the target machine and run the following command:
 
 docker-compose up --build
 
@@ -55,7 +60,12 @@ y el principal objetivo de utilizar la segregación de responsabilidad lectura/e
 en este caso al utilizarse una sola BD y montarla mediante contenedores en el mismo servidor que el API creo que es más optimo utilizar un CRUD simple.
 	
 ## Instrucciones de compilación
-Instalar Docker en la maquina destino y lanzar el siguiente comando:
+1. Clonar este repositorio
+
+2. Añadir un fichero .env en la carpeta raiz con estos valores:
+	SA_PASSWORD=[cualquier contraseña a partir de 8 caracteres que contenga letras mayúsculas, letras minúsculas, numeros, simbolos]
+
+3. Instalar Docker en la maquina destino y lanzar el siguiente comando:
 
 docker-compose up --build
 
