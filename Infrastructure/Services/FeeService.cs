@@ -22,7 +22,7 @@ namespace Infrastructure.Services
             _configuration = configuration;
         }
 
-        public async Task<BaseResponse<Fee>> PopulateFeeDbAsync()
+        public virtual async Task<BaseResponse<Fee>> PopulateFeeDbAsync()
         {
             BaseResponse<Fee> resp = new BaseResponse<Fee>
             {
@@ -55,12 +55,9 @@ namespace Infrastructure.Services
 
             return resp;
         }
-        public async Task<BaseResponse<Fee>> GetAsync(int? id, int? page, int? pageSize)
+        public virtual async Task<BaseResponse<Fee>> GetFeeAsync(int? id, int? page, int? pageSize)
         {
-            BaseResponse<Fee> resp = new BaseResponse<Fee>
-            {
-                Total = 0
-            };
+            BaseResponse<Fee> resp = new();
 
             try
             {

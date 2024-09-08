@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
         [Route("[action]")]
         public async Task<IActionResult> GetAsync([FromQuery] int? id, [FromQuery] int? page, [FromQuery] int? pageSize)
         {
-            BaseResponse<Fee> resp = await _service.GetAsync(id, page, pageSize);
+            BaseResponse<Fee> resp = await _service.GetFeeAsync(id, page, pageSize);
 
             if (resp.Errors.Count > 0)
             {
