@@ -22,6 +22,10 @@ namespace Infrastructure.Services
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// This method insert all fees from https://api.opendata.esett.com/EXP05/Fees in data base.
+        /// </summary>
+        /// <returns>Returns the list of fees inserted in data base.</returns>
         public virtual async Task<BaseResponse<Fee>> PopulateFeeDbAsync()
         {
             BaseResponse<Fee> resp = new BaseResponse<Fee>
@@ -55,6 +59,14 @@ namespace Infrastructure.Services
 
             return resp;
         }
+
+        /// <summary>
+        /// This method returns a Fee for a given id or a list of Fees if no Id is provided.
+        /// </summary>
+        /// <param name="id">The given Id.</param>
+        /// <param name="page">The page in case you want a list of Fees.</param>
+        /// <param name="pageSize">The page size in case you want a list of Fees.</param>
+        /// <returns>Returns a fee or a list of fees.</returns>
         public virtual async Task<BaseResponse<Fee>> GetFeeAsync(int? id, int? page, int? pageSize)
         {
             BaseResponse<Fee> resp = new();
@@ -86,7 +98,5 @@ namespace Infrastructure.Services
             }
             return resp;
         }
-
-
     }
 }
